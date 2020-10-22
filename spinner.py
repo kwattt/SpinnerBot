@@ -14,7 +14,7 @@ cogs = [
 ]
 
 client = commands.Bot(bot=True, reconnect=True, command_prefix=sv_prefix,
-                      description="Interlinked")
+                      description="Interlinked v0.1")
 
 if __name__ == "__main__":
     for cog in cogs:

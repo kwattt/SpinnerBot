@@ -1,14 +1,21 @@
 import discord
 from discord.ext import commands
 from commons import loadFile, saveFile
+from discord import Embed
+
 
 class ROLES(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(description="Displays available custom booster color roles.")
-    async def boostercolors(self, ctx, arg):
-        pass
+    async def boostercolors(self, ctx):
+        roles = loadFile("info.json")["roles"]
+        colors = ""
+        for x in roles:
+            colors += x + "\n"
+        emb = Embed(title="Colors", description=colors, color=0xe78b2e)
+        await ctx.send(embed=emb)
 
     async def remove_roles(self, ctx):
         roless = loadFile("info.json")["roles"]

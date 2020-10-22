@@ -48,7 +48,7 @@ class PURGE(commands.Cog):
                 saveFile("info.json", purge)
                 await ctx.send("Purge has been disabled for this channel.")
         elif cid in purge:            
-            purge.pop(cid)
+            del purge[cid]
             cfg["purge"] = purge
             saveFile("info.json", purge)
             await ctx.send("Purge has been disabled for this channel.")

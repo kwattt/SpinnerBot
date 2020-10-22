@@ -23,17 +23,17 @@ class PURGE(commands.Cog):
     @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge this channel at a  specified time.", guild_only=True)
     async def purgechannel(self, ctx, arg=None):
+        cfg = loadFile("info.json")
+        purge = cfg["purge"]
+        cid = ctx.channel.id
         if arg:
-            cid = ctx.channel.id
             try: 
                 target = datetime.strptime(arg, "%H:%M")
             except ValueError:
                 await ctx.send("I need this format \"MINUTE-HOUR\" ")
+                return 
 
-            cfg = loadFile("info.json")
-            purge = cfg["purge"]
-
-            if not ctx.channel.id in purge:            
+            if not cid in purge:            
                 if target:
                     newpurge = {"channel": cid, "hour": target.hour, "minute": target.minute}
                     purge[cid] = newpurge 
@@ -47,7 +47,7 @@ class PURGE(commands.Cog):
                 cfg["purge"] = purge
                 saveFile("info.json", purge)
                 await ctx.send("Purge has been disabled for this channel.")
-        elif ctx.channel.id in purge:            
+        elif cid in purge:            
             purge.pop(cid)
             cfg["purge"] = purge
             saveFile("info.json", purge)

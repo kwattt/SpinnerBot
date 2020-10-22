@@ -1,4 +1,7 @@
 from discord.ext import commands
+import discord
+import traceback
+import sys
 # from https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612
 
 class CommandErrorHandler(commands.Cog):
@@ -19,6 +22,18 @@ class CommandErrorHandler(commands.Cog):
 
         ignored = (commands.CommandNotFound, )
         error = getattr(error, 'original', error)
+
+        if isinstance(error, ignored):
+            return
+
+        elif isinstance(error, commands.NoPrivateMessage):
+            try:
+                await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+            except discord.HTTPException:
+                pass
+        else:
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 def setup(client):
     client.add_cog(CommandErrorHandler(client))

@@ -7,7 +7,7 @@ class ROLES(commands.Cog):
         self.client = client
 
     @commands.command(description="Displays available custom booster color roles.")
-    async def boostercolors(self, ctx, arg):
+    async def boostercolors(self):
         rolelist = loadFile("info.json")["roles"]
         print(rolelist)
         pass

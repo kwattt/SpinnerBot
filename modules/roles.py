@@ -6,7 +6,7 @@ class ROLES(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(description="To see the booster roles.")
+    @commands.command(description="Displays available custom booster color roles.")
     async def boostercolors(self, ctx, arg):
         pass
 
@@ -17,11 +17,11 @@ class ROLES(commands.Cog):
                 await ctx.author.remove_roles(role)
                 break
 
-    @commands.command(description="To change your role, only boosters btw.")
+    @commands.command(description="Assign a custom color role. Only available for Server Boosters.")
     async def boostercolor(self, ctx, arg):
         # check if user is a booster
         if discord.utils.get(ctx.guild.roles, name="Server Booster") in ctx.author.roles:
-            if arg: 
+            if arg:
                 roles = loadFile("info.json")["roles"]
                 if arg.lower() in [rol.lower() for rol in roles]:
                     idx = [rol.lower() for rol in roles].index(arg.lower())
@@ -33,7 +33,7 @@ class ROLES(commands.Cog):
                         if not role in ctx.author.roles: 
                             await self.remove_roles(ctx)
                             await ctx.author.add_roles(role)
-                            await ctx.send("Now you have the role " + arg)
+                            await ctx.send("You now have the role" + arg)
                         else:
                             await ctx.author.remove_roles(role)
                             await ctx.send("You no longer have the role " + arg)
@@ -44,10 +44,10 @@ class ROLES(commands.Cog):
             else:
                 await ctx.send("<:hal9000:740607488138805351>")
         else: 
-            await ctx.send("I'm going to need :money_with_wings:")
+            await ctx.send("This command is only available for Server Boosters.")
 
     @commands.has_permissions(manage_roles=True)
-    @commands.command(description="To change your role, only admins btw.")
+    @commands.command(description="Command to add roles. Available only for staff.")
     async def addboostercolor(self, ctx, arg):
         if ctx.message.author.guild_permissions.manage_roles: # added my id for testing
             cfg = loadFile("info.json")

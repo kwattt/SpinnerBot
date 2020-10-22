@@ -1,5 +1,7 @@
 {
     "prefix": "(",
+    "purge": {
+    },
     "roles": [
         "DTTWPurple",
         "Offwhite",
@@ -10,6 +12,7 @@
         "BLACK",
         "Dark Red",
         "Orange",
-        "Yellow"
+        "Yellow",
+        "True White"
     ]
 }

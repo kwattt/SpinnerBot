@@ -15,16 +15,23 @@ class ROLES(commands.Cog):
                     # it exists, lets search for it.
                     role = discord.utils.get(ctx.guild.roles, name=arg)
                     if role:
-                        await ctx.author.add_roles(role)
-                        ctx.send("Now you are " + arg)
+
+                        # does the user have the role?                        
+                        if not role in ctx.author.roles: 
+                            await ctx.author.add_roles(role)
+                            await ctx.send("Now you have the role " + arg)
+                        else:
+                            await ctx.author.remove_roles(role)
+                            await ctx.send("You no longer have the role" + arg)
+
                     else: 
-                        ctx.send("<:hal9000:768633142504325130>")
+                        await ctx.send("<:hal9000:768633142504325130>")
                 else:
-                    ctx.send("<:hal9000:768633142504325130>")
+                    await ctx.send("<:hal9000:768633142504325130>")
             else:
-                ctx.send("<:hal9000:768633142504325130>")
+                await ctx.send("<:hal9000:768633142504325130>")
         else: 
-            ctx.send("I'm going to need :money_with_wings:")
+            await ctx.send("I'm going to need :money_with_wings:")
 
 def setup(client):
     client.add_cog(ROLES(client))

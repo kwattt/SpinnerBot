@@ -8,6 +8,7 @@ def sv_prefix(client, msg):
 
 cogs = [
     "modules.roles",
+    "modules.config",
     "modules.errors"
 ]
 

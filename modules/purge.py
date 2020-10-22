@@ -43,7 +43,7 @@ class PURGE(commands.Cog):
                 else: 
                     await ctx.send("I need this format \"MINUTE-HOUR\" ")
             else: 
-                purge.pop(cid)
+                del purge[cid]
                 cfg["purge"] = purge
                 saveFile("info.json", purge)
                 await ctx.send("Purge has been disabled for this channel.")

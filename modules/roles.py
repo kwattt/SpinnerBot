@@ -24,7 +24,7 @@ class ROLES(commands.Cog):
                 await ctx.author.remove_roles(role)
                 break
 
-    @commands.command(description="Assign a custom color role. Only available for Server Boosters.")
+    @commands.command(description="Assign a custom color role. Only available for Server Boosters.", aliases=['rboostercolor'])
     async def boostercolor(self, ctx, arg):
         # check if user is a booster
         if discord.utils.get(ctx.guild.roles, name="Server Booster") in ctx.author.roles:

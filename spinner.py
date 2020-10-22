@@ -10,6 +10,7 @@ cogs = [
     "modules.roles",
     "modules.misc",
     "modules.errors"
+    "modules.purge"
 ]
 
 client = commands.Bot(bot=True, reconnect=True, command_prefix=sv_prefix,

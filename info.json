@@ -1,6 +1,11 @@
 {
     "prefix": "(",
     "roles": [
-        "DTTWPurple"
+        "DTTWPurple",
+        "Offwhite",
+        "Red",
+        "Green",
+        "Blue",
+        "Purple"
     ]
 }

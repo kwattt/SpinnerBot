@@ -26,6 +26,12 @@ class CommandErrorHandler(commands.Cog):
         if isinstance(error, ignored):
             return
 
+        elif isinstance(error, commands.MissingPermissions):
+            try:
+                await ctx.send("<:hal9000:740607488138805351>")
+            except discord.HTTPException:
+                pass
+
         elif isinstance(error, commands.NoPrivateMessage):
             try:
                 await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')

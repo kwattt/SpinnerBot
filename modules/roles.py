@@ -8,7 +8,7 @@ class ROLES(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(description="Displays available custom booster color roles.")
+    @commands.command(description="Displays available custom booster color roles.", guild_only=True)
     async def boostercolors(self, ctx):
         roles = loadFile("info.json")["roles"]
         colors = ""
@@ -24,7 +24,7 @@ class ROLES(commands.Cog):
                 await ctx.author.remove_roles(role)
                 break
 
-    @commands.command(description="Assign a custom color role. Only available for Server Boosters.")
+    @commands.command(description="Assign a custom color role. Only available for Server Boosters.", aliases=['rboostercolor'], guild_only=True)
     async def boostercolor(self, ctx, arg):
         # check if user is a booster
         if discord.utils.get(ctx.guild.roles, name="Server Booster") in ctx.author.roles:
@@ -40,7 +40,7 @@ class ROLES(commands.Cog):
                         if not role in ctx.author.roles: 
                             await self.remove_roles(ctx)
                             await ctx.author.add_roles(role)
-                            await ctx.send("You now have the role" + arg)
+                            await ctx.send("You now have the role " + arg)
                         else:
                             await ctx.author.remove_roles(role)
                             await ctx.send("You no longer have the role " + arg)
@@ -54,7 +54,7 @@ class ROLES(commands.Cog):
             await ctx.send("This command is only available for Server Boosters.")
 
     @commands.has_permissions(manage_roles=True)
-    @commands.command(description="Command to add roles. Available only for staff.")
+    @commands.command(description="Command to add roles. Available only for staff.", guild_only=True)
     async def addboostercolor(self, ctx, arg):
         if ctx.message.author.guild_permissions.manage_roles: # added my id for testing
             cfg = loadFile("info.json")

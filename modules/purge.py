@@ -17,11 +17,11 @@ class PURGE(commands.Cog):
                 cid = purge[b]["channel"]
                 channel = self.client.get_channel(cid)   
                 await channel.purge(limit=9999)
-                await channel.send("This channel has been purged")
-                await channel.send("Purge will occur every day at {}:{} UTC-0".format(ctime.hour, ctime.minute))
+                await channel.send("This channel has been purged.")
+                await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.hour, ctime.minute))
 
     @commands.has_permissions(manage_channels=True)
-    @commands.command(description="Command to purge this channel at specified time.", guild_only=True)
+    @commands.command(description="Command to purge this channel at a  specified time.", guild_only=True)
     async def purgechannel(self, ctx, arg):
         if arg:
             cid = ctx.channel.id

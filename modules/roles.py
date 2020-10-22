@@ -8,7 +8,12 @@ class ROLES(commands.Cog):
 
     @commands.command(description="Displays available custom booster color roles.")
     async def boostercolors(self, ctx, arg):
-        pass
+        emb = Embed(title="Help & commands", description=
+        '''
+
+
+        '''
+        , color=0xe78b2e)
 
     async def remove_roles(self, ctx):
         roless = loadFile("info.json")["roles"]

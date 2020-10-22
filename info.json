@@ -1,18 +1,18 @@
 {
-    "prefix": "(",
+    "prefix": "!",
     "purge": {
     },
     "roles": [
-        "DTTWPurple",
-        "Offwhite",
-        "Red",
-        "Green",
+        "Black",
         "Blue",
-        "Purple",
-        "BLACK",
-        "Dark Red",
+        "Dark_Red",
+        "DTTWPurple",
+        "Green",
+        "Offwhite",
         "Orange",
-        "Yellow",
-        "True White"
+        "Purple",
+        "Red",
+        "True_White",
+        "Yellow"
     ]
 }

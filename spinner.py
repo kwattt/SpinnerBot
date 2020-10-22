@@ -3,14 +3,15 @@ import json
 from commons import loadFile
 
 def sv_prefix(client, msg):
-    prefix = loadFile("info")['prefix']
+    prefix = loadFile("info.json")['prefix']
     return prefix
 
 cogs = [
-    "modules.roles"
+    "modules.roles",
+    "modules.errors"
 ]
 
-client = commands.Bot(bot=True, reconnect=True, command_prefix="sv_prefix",
+client = commands.Bot(bot=True, reconnect=True, command_prefix=sv_prefix,
                       description="Interlinked")
 
 if __name__ == "__main__":

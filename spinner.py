@@ -1,10 +1,9 @@
 from discord.ext import commands
 import json
+from commons import loadFile
 
 def sv_prefix(client, msg):
-    f_prefix = open("info.json", 'r', encoding="utf8")
-    prefix = json.load(f_prefix)['prefix']
-    f_cfg.close()
+    prefix = loadFile("info")['prefix']
     return prefix
 
 cogs = [
@@ -15,7 +14,6 @@ client = commands.Bot(bot=True, reconnect=True, command_prefix="sv_prefix",
                       description="Interlinked")
 
 if __name__ == "__main__":
-    
     for cog in cogs:
         try:
             client.load_extension(cog)
@@ -25,8 +23,5 @@ if __name__ == "__main__":
             print("Error loading cog %s" % cog)
             print("{}: {}".format(type(e).__name__, e))
 
-f_cfg = open("data.json", 'r', encoding="utf8")
-cfg = json.load(f_cfg)
-f_cfg.close()
-
+cfg = loadFile("data.json")
 client.run(cfg["discord_key"])

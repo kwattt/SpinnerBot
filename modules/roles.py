@@ -37,14 +37,9 @@ class ROLES(commands.Cog):
                         else:
                             await ctx.author.remove_roles(role)
                             await ctx.send("You no longer have the role " + arg)
-
                     else:
-                        print("not found2")
                         await ctx.send("<:hal9000:740607488138805351>")
                 else:
-                    print("not found")
-                    print([rol.lower() for rol in roles])
-                    print(arg.lower())
                     await ctx.send("<:hal9000:740607488138805351>")
             else:
                 await ctx.send("<:hal9000:740607488138805351>")

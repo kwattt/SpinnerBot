@@ -21,7 +21,7 @@ class ROLES(commands.Cog):
     async def boostercolor(self, ctx, arg):
         # check if user is a booster
         if discord.utils.get(ctx.guild.roles, name="Server Booster") in ctx.author.roles:
-            if arg: 
+            if arg:
                 roles = loadFile("info.json")["roles"]
                 if arg.lower() in [rol.lower() for rol in roles]:
                     idx = [rol.lower() for rol in roles].index(arg.lower())
@@ -44,7 +44,7 @@ class ROLES(commands.Cog):
             else:
                 await ctx.send("<:hal9000:740607488138805351>")
         else: 
-            await ctx.send("I'm going to need :money_with_wings:")
+            await ctx.send("This command is only available for Server Boosters.")
 
     @commands.has_permissions(manage_roles=True)
     @commands.command(description="Command to add roles. Available only for staff.")

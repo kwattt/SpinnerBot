@@ -22,7 +22,7 @@ class PURGE(commands.Cog):
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge this channel at a  specified time.", guild_only=True)
-    async def purgechannel(self, ctx, arg):
+    async def purgechannel(self, ctx, arg=None):
         if arg:
             cid = ctx.channel.id
             try: 
@@ -47,6 +47,11 @@ class PURGE(commands.Cog):
                 cfg["purge"] = purge
                 saveFile("info.json", purge)
                 await ctx.send("Purge has been disabled for this channel.")
+        elif ctx.channel.id in purge:            
+            purge.pop(cid)
+            cfg["purge"] = purge
+            saveFile("info.json", purge)
+            await ctx.send("Purge has been disabled for this channel.")
 
     @commands.command(description="Command to check the remaining time to purge a channel.", guild_only=True)
     async def purgetime(self, ctx):

@@ -33,25 +33,26 @@ class PURGE(commands.Cog):
                 await ctx.send("I need this format \"MINUTE-HOUR\" ")
                 return 
 
-            if not cid in purge:            
+            if not str(cid) in purge:            
                 if target:
                     newpurge = {"channel": cid, "hour": target.hour, "minute": target.minute}
-                    purge[cid] = newpurge 
+                    purge[str(cid)] = newpurge 
                     await ctx.send("I will purge this channel every day at {}:{} UTC-0".format(target.hour, target.minute))
                     cfg["purge"] = purge
                     saveFile("info.json", cfg)
                 else: 
                     await ctx.send("I need this format \"MINUTE-HOUR\" ")
             else: 
-                del purge[cid]
+                del purge[str(cid)]
                 cfg["purge"] = purge
-                saveFile("info.json", purge)
+                saveFile("info.json", cfg)
                 await ctx.send("Purge has been disabled for this channel.")
-        elif cid in purge:            
-            del purge[cid]
-            cfg["purge"] = purge
-            saveFile("info.json", purge)
-            await ctx.send("Purge has been disabled for this channel.")
+        else:
+            if str(cid) in purge:            
+                del purge[str(cid)]
+                cfg["purge"] = purge
+                saveFile("info.json", cfg)
+                await ctx.send("Purge has been disabled for this channel.")
 
     @commands.command(description="Command to check the remaining time to purge a channel.", guild_only=True)
     async def purgetime(self, ctx):

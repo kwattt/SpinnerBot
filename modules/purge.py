@@ -24,7 +24,7 @@ class PURGE(commands.Cog):
     @commands.command(description="Command to purge the current channel", guild_only=True)
     async def deletechannel(self, ctx):
         if ctx.message.author.guild_permissions.manage_roles: 
-            channel = ctx.channel   
+            channel = ctx.channel
             await channel.purge(limit=99999)
             await channel.send("This channel has been purged.")
         else: 

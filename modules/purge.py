@@ -21,6 +21,16 @@ class PURGE(commands.Cog):
                 await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.hour, ctime.minute))
 
     @commands.has_permissions(manage_channels=True)
+    @commands.command(description="Command to purge the current channel", guild_only=True)
+    async def deletechannel(self, ctx):
+        if ctx.message.author.guild_permissions.manage_roles: 
+            channel = ctx.channel   
+            await channel.purge(limit=99999)
+            await channel.send("This channel has been purged.")
+        else: 
+            await ctx.send("<:hal9000:740607488138805351>")
+
+    @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge this channel at a  specified time.", guild_only=True)
     async def purgechannel(self, ctx, arg=None):
         cfg = loadFile("info.json")

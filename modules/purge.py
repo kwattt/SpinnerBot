@@ -18,7 +18,7 @@ class PURGE(commands.Cog):
                 channel = self.client.get_channel(cid)   
                 await channel.purge(limit=9999)
                 await channel.send("This channel has been purged.")
-                await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.hour, ctime.minute))
+                await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.strftime('%H'), ctime.strftime('%M')))
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge the current channel", guild_only=True)
@@ -40,7 +40,7 @@ class PURGE(commands.Cog):
             try: 
                 target = datetime.strptime(arg, "%H:%M")
             except ValueError:
-                await ctx.send("I need this format \"MINUTE-HOUR\" ")
+                await ctx.send("I need this format \"MINUTE:HOUR\" ")
                 return 
 
             if not str(cid) in purge:            
@@ -51,7 +51,7 @@ class PURGE(commands.Cog):
                     cfg["purge"] = purge
                     saveFile("info.json", cfg)
                 else: 
-                    await ctx.send("I need this format \"MINUTE-HOUR\" ")
+                    await ctx.send("I need this format \"MINUTE:HOUR\" ")
             else: 
                 del purge[str(cid)]
                 cfg["purge"] = purge

@@ -13,7 +13,7 @@ class PURGE(commands.Cog):
         ctime = datetime.now(timezone("Etc/UTC"))
         purge = loadFile("info.json")["purge"]
 
-        future = datetime.now() + datetime.timedelta(minutes=15)
+        future = datetime.now() + timedelta(minutes=15)
 
         for b in purge:
 

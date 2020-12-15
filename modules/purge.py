@@ -12,8 +12,19 @@ class PURGE(commands.Cog):
     async def minutes(self):
         ctime = datetime.now(timezone("Etc/UTC"))
         purge = loadFile("info.json")["purge"]
+
+        future = datetime.datetime.now() + datetime.timedelta(minutes=15)
+
+
+
         for b in purge:
-            if purge[b]["hour"] == ctime.hour and purge[b]["minute"] == ctime.minute:
+
+            if purge[b]["hour"] == future.hour and purge[b]["minute"] == future.minute:
+                cid = purge[b]["channel"]
+                channel = self.client.get_channel(cid)   
+                await channel.send("-- This channel will be purged in 15 minutes --")
+
+            elif purge[b]["hour"] == ctime.hour and purge[b]["minute"] == ctime.minute:
                 cid = purge[b]["channel"]
                 channel = self.client.get_channel(cid)   
                 await channel.purge(limit=9999)

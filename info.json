@@ -15,5 +15,6 @@
         "Red",
         "True_White",
         "Yellow"
-    ]
+    ],
+    "mentionChannel": "id_goes_here"
 }

@@ -10,11 +10,12 @@ cogs = [
     "modules.roles",
     "modules.misc",
     "modules.errors",
-    "modules.purge"
+    "modules.purge",
+    "modules.mentions"
 ]
 
 client = commands.Bot(bot=True, reconnect=True, command_prefix=sv_prefix,
-                      description="Interlinked v0.1")
+                      description="Interlinked v0.1b")
 
 if __name__ == "__main__":
     for cog in cogs:

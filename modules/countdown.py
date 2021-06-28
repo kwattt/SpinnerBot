@@ -65,8 +65,9 @@ class COUNTDOWNS(commands.Cog):
                 target = datetime.datetime.strptime(arg, "%Y:%m:%d:%H:%M")
                 diff = target-ctime 
 
-                newName = f"{diff.days}d-{diff.seconds//3600}h-{(diff.seconds//60)%60}m"
-
+                # newName = f"{diff.days}d-{diff.seconds//3600}h-{(diff.seconds//60)%60}m"
+                newName = f"{diff.days}days-left"
+                
                 if diff.days <= -1:
                     await channel.send("THE COUNTDOWN IS OVER.")
                     del countdowns[x]

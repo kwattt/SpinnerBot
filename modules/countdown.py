@@ -66,17 +66,8 @@ class COUNTDOWNS(commands.Cog):
                 diff = target-ctime 
 
                 # newName = f"{diff.days}d-{diff.seconds//3600}h-{(diff.seconds//60)%60}m"
-                newName = f"{diff.days}days-left"
+                newName = f"{diff.days}days-plus-delay"
                 
-                if diff.days <= -1:
-                    await channel.send("THE COUNTDOWN IS OVER.")
-                    del countdowns[x]
-                    cfg["countdown"] = countdowns
-                    saveFile("info.json", cfg)
-                    await channel.edit(name="OVER")
-
-                    return
-
                 try:
                     await channel.edit(name=newName)
                 except Exception as e:

@@ -1,0 +1,36 @@
+name: Build and run application on server
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run playbook
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        # Required, playbook filepath
+        playbook: deploy.yml
+        # Optional, directory where playbooks live
+        directory: ./ansible
+        # Optional, SSH private key
+        key: ${{secrets.SHAAFE_KEY}}
+        # Optional, literal inventory file contents
+        inventory: |
+          [servers]
+          ${{secrets.SERVER_IP}}
+        # Optional, SSH known hosts file content
+        # known_hosts: .known_hosts
+        # # Optional, encrypted vault password
+        # vault_password: ${{secrets.VAULT_PASSWORD}}
+        # # Optional, galaxy requirements filepath
+        # requirements: galaxy-requirements.yml
+        # Optional, additional flags to pass to ansible-playbook

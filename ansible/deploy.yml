@@ -1,0 +1,9 @@
+---
+ - hosts: servers
+   tasks:
+   - name: Clone a github repository
+     git:
+       repo: https://github.com/kwattt/SpinnerBot
+       dest: /root/test01
+       clone: yes
+       update: yes

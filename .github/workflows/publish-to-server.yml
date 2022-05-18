@@ -26,7 +26,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [servers]
-          ${{secrets.SERVER_IP}} ansible_connection=ssh ansible_user=root
+          ${{secrets.SERVER_IP}}
         # Optional, SSH known hosts file content
         # known_hosts: .known_hosts
         # # Optional, encrypted vault password
@@ -34,3 +34,5 @@ jobs:
         # # Optional, galaxy requirements filepath
         # requirements: galaxy-requirements.yml
         # Optional, additional flags to pass to ansible-playbook
+        options: |
+          --user root

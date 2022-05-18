@@ -26,7 +26,7 @@ jobs:
         # Optional, literal inventory file contents
         inventory: |
           [servers]
-          ${{secrets.SERVER_IP}}
+          ${{secrets.SERVER_IP}} ansible_user=root
         # Optional, SSH known hosts file content
         # known_hosts: .known_hosts
         # # Optional, encrypted vault password

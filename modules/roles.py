@@ -25,8 +25,11 @@ class ROLES(commands.Cog):
                 break
 
     @commands.command(description="Assign a custom color role. Only available for Server Boosters.", aliases=['rboostercolor'], guild_only=True)
-    async def boostercolor(self, ctx, arg):
-        # check if user is a booster
+    async def boostercolor(self, ctx, *arg):
+        if not arg:
+            return
+        
+        arg = arg[0]
         if discord.utils.get(ctx.guild.roles, name="Server Booster") in ctx.author.roles:
             if arg:
                 roles = loadFile("info.json")["roles"]
@@ -45,17 +48,19 @@ class ROLES(commands.Cog):
                             await ctx.author.remove_roles(role)
                             await ctx.send("You no longer have the role " + arg)
                     else:
-                        await ctx.send("<:hal9000:740607488138805351>")
+                        await ctx.send("This role is not created <:hal9000:740607488138805351>")
                 else:
-                    await ctx.send("<:hal9000:740607488138805351>")
+                    await ctx.send("I could not find that role <:hal9000:740607488138805351>")
             else:
-                await ctx.send("<:hal9000:740607488138805351>")
-        else: 
-            await ctx.send("This command is only available for Server Boosters.")
+                await ctx.send("I need a color role <:hal9000:740607488138805351>")
 
     @commands.has_permissions(manage_roles=True)
     @commands.command(description="Command to add roles. Available only for staff.", guild_only=True)
-    async def addboostercolor(self, ctx, arg):
+    async def addboostercolor(self, ctx, *arg):
+        if not arg:
+            return
+        arg = arg[0]
+
         if ctx.message.author.guild_permissions.manage_roles: # added my id for testing
             cfg = loadFile("info.json")
             roles = cfg["roles"]
@@ -73,11 +78,11 @@ class ROLES(commands.Cog):
                         cfg["roles"] = roles
                         saveFile("info.json", cfg)
                 else:
-                    await ctx.send("<:hal9000:740607488138805351>")
+                    await ctx.send("This role does not exist. <:hal9000:740607488138805351>")
             else:
-                await ctx.send("<:hal9000:740607488138805351>")
+                await ctx.send("I need a role. <:hal9000:740607488138805351>")
         else:
-            await ctx.send("<:hal9000:740607488138805351>")
+            await ctx.send("Im afraid i can't do that, Dave <:hal9000:740607488138805351>")
 
-def setup(client):
-    client.add_cog(ROLES(client))
+async def setup(client):
+    await client.add_cog(ROLES(client))

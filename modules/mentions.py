@@ -26,7 +26,7 @@ class MENTIONS(commands.Cog):
 
                 embed = Embed(title="Mentioned roles", description=values, timestamp=datetime.datetime.utcnow(), colour=0x22b7ba)
 
-                embed.set_author(name=uname, icon_url=msg.author.avatar_url)
+                embed.set_author(name=uname, icon_url=msg.author.display_avatar)
 
                 uid = f"user id: {msg.author.id} "
                 
@@ -34,5 +34,5 @@ class MENTIONS(commands.Cog):
                 await target_channel.send(embed=embed)
 
 
-def setup(client):
-    client.add_cog(MENTIONS(client))
+async def setup(client):
+    await client.add_cog(MENTIONS(client))

@@ -74,5 +74,5 @@ class COUNTDOWNS(commands.Cog):
                     print(e)
 
 
-def setup(client):
-    client.add_cog(COUNTDOWNS(client))
+async def setup(client):
+    await client.add_cog(COUNTDOWNS(client))

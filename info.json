@@ -1,8 +1,8 @@
 {
     "prefix": "!",
-    "purge": {
-
-    },
+    "purge": [
+   
+    ],
     "roles": [
         "Black",
         "Blue",
@@ -16,5 +16,5 @@
         "True_White",
         "Yellow"
     ],
-    "mentionChannel": "id_goes_here"
+    "mentionChannel": ""
 }

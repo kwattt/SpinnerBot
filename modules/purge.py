@@ -1,33 +1,48 @@
 from discord.ext import commands, tasks
 from commons import loadFile, saveFile
 from datetime import datetime, timedelta
-from pytz import timezone
+from pytz import timezone, UTC
 
 class PURGE(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.to_keep = []
+
+    @commands.Cog.listener()
+    async def on_ready(self):
         self.minutes.start()
 
     @tasks.loop(seconds=60)
     async def minutes(self):
-        ctime = datetime.now(timezone("Etc/UTC"))
+
         purge = loadFile("info.json")["purge"]
 
-        future = datetime.now(timezone("Etc/UTC")) + timedelta(minutes=15)
+        for c_purge in purge:
+            channel = self.client.get_channel(int(c_purge["channel"]))   
+            if not channel:
+                continue
 
-        for b in purge:
+            if not "type" in c_purge.keys() or c_purge["type"] == 0:
+                ctime = datetime.now(timezone("Etc/UTC"))
+                future = datetime.now(timezone("Etc/UTC")) + timedelta(minutes=15)
 
-            if purge[b]["hour"] == future.hour and purge[b]["minute"] == future.minute:
-                cid = purge[b]["channel"]
-                channel = self.client.get_channel(cid)   
-                await channel.send("-- This channel will be purged in 15 minutes --")
+                if c_purge["hour"] == future.hour and c_purge["minute"] == future.minute:
+                    await channel.send("-- This channel will be purged in 15 minutes --")
 
-            elif purge[b]["hour"] == ctime.hour and purge[b]["minute"] == ctime.minute:
-                cid = purge[b]["channel"]
-                channel = self.client.get_channel(cid)   
-                await channel.purge(limit=9999)
-                await channel.send("This channel has been purged.")
-                await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.strftime('%H'), ctime.strftime('%M')))
+                elif c_purge["hour"] == ctime.hour and c_purge["minute"] == ctime.minute:
+                    await channel.purge(limit=9999)
+                    await channel.send("This channel has been purged.")
+                    await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.strftime('%H'), ctime.strftime('%M')))
+
+            elif c_purge["type"] == 1:
+                current_timestamp = datetime.now()
+
+                bulk=[]
+                async for message in channel.history():
+                    if current_timestamp.timestamp() >= (message.created_at + timedelta(hours=24)).timestamp() and not message.pinned:
+                        bulk.append(message)
+
+                await channel.delete_messages(bulk)
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge the current channel", guild_only=True)
@@ -85,5 +100,5 @@ class PURGE(commands.Cog):
         else:
             await ctx.send("Purge is not enabled for this channel.")
 
-def setup(client):
-    client.add_cog(PURGE(client))
+async def setup(client):
+    await client.add_cog(PURGE(client))

@@ -1,31 +1,35 @@
+import asyncio
+from discord import Intents
 from discord.ext import commands
-import json
-from commons import loadFile
+from os import getenv
 
 def sv_prefix(client, msg):
-    prefix = loadFile("info.json")['prefix']
-    return prefix
+    return getenv('DISCORD_PREFIX')
 
 cogs = [
     "modules.roles",
-    "modules.misc",
     "modules.errors",
     "modules.purge",
     "modules.mentions"
 ]
 
+intents = Intents.default()
+intents.message_content = True
+
 client = commands.Bot(bot=True, reconnect=True, command_prefix=sv_prefix,
-                      description="Interlinked v0.1b")
+                    description="Interlinked v0.2b", intents=intents)
 
-if __name__ == "__main__":
-    for cog in cogs:
-        try:
-            client.load_extension(cog)
-            print("{} loaded without any problems.".format(cog))
+async def main():
+    if __name__ == "__main__":
+        for cog in cogs:
+            try:
+                await client.load_extension(cog)
+                print("{} loaded without any problems.".format(cog))
 
-        except Exception as e:
-            print("Error loading cog %s" % cog)
-            print("{}: {}".format(type(e).__name__, e))
+            except Exception as e:
+                print("Error loading cog %s" % cog)
+                print("{}: {}".format(type(e).__name__, e))
 
-cfg = loadFile("data.json")
-client.run(cfg["discord_key"])
+asyncio.run(main())
+
+client.run(getenv('DISCORD_TOKEN'))

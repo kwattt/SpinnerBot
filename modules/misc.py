@@ -17,5 +17,5 @@ class MISC(commands.Cog):
         , color=0xe78b2e)
 
 
-def setup(client):
-    client.add_cog(MISC(client))
+async def setup(client):
+    await client.add_cog(MISC(client))

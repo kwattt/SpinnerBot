@@ -7,4 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+ENV DISCORD_TOKEN=changeme
+ENV DISCORD_PREFIX=!
 CMD [ "python", "./spinner.py" ]

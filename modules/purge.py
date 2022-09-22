@@ -88,17 +88,5 @@ class PURGE(commands.Cog):
                 saveFile("info.json", cfg)
                 await ctx.send("Purge has been disabled for this channel.")
 
-    @commands.command(description="Command to check the remaining time to purge a channel.", guild_only=True)
-    async def purgetime(self, ctx):
-        cid = ctx.channel.id
-        purges = loadFile("info.json")["purge"]
-        if str(cid) in purges:
-            ctime = datetime.now(timezone("Etc/UTC"))
-            rhour = abs(24+purges[str(cid)]["hour"] - ctime.hour)
-            rminute = abs(purges[str(cid)]["minute"] - ctime.minute)
-            await ctx.send("This channel will be purged in {} hours and {} minutes".format(rhour, rminute))
-        else:
-            await ctx.send("Purge is not enabled for this channel.")
-
 async def setup(client):
     await client.add_cog(PURGE(client))

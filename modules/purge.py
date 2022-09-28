@@ -39,12 +39,11 @@ class PURGE(commands.Cog):
 
                 bulk=[]
                 async for message in channel.history(oldest_first=True):
-                    if current_timestamp >= (message.created_at + timedelta(seconds=30)).timestamp():
+                    if current_timestamp >= (message.created_at + timedelta(hours=24)).timestamp():
                         if message.pinned:
                             continue
                         bulk.append(message)
                     else:
-                        print("breaked at", message.content)
                         break
 
                 await channel.delete_messages(bulk)

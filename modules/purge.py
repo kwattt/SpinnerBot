@@ -35,12 +35,17 @@ class PURGE(commands.Cog):
                     await channel.send("The next Purge will occur every day at {}:{} UTC-0".format(ctime.strftime('%H'), ctime.strftime('%M')))
 
             elif c_purge["type"] == 1:
-                current_timestamp = datetime.now()
+                current_timestamp = datetime.now().timestamp()
 
                 bulk=[]
-                async for message in channel.history():
-                    if current_timestamp.timestamp() >= (message.created_at + timedelta(hours=24)).timestamp() and not message.pinned:
+                async for message in channel.history(oldest_first=True):
+                    if current_timestamp >= (message.created_at + timedelta(seconds=30)).timestamp():
+                        if message.pinned:
+                            continue
                         bulk.append(message)
+                    else:
+                        print("breaked at", message.content)
+                        break
 
                 await channel.delete_messages(bulk)
 

@@ -1,4 +1,5 @@
 from discord.ext import commands, tasks
+from discord import DiscordServerError
 from commons import loadFile, saveFile
 from datetime import datetime, timedelta
 from pytz import timezone, UTC
@@ -38,15 +39,21 @@ class PURGE(commands.Cog):
                 current_timestamp = datetime.now().timestamp()
 
                 bulk=[]
-                async for message in channel.history(oldest_first=True):
-                    if current_timestamp >= (message.created_at + timedelta(hours=24)).timestamp():
-                        if message.pinned:
-                            continue
-                        bulk.append(message)
-                    else:
-                        break
+                try:
+                    async for message in channel.history(oldest_first=True):
+                        if current_timestamp >= (message.created_at + timedelta(hours=24)).timestamp():
+                            if message.pinned:
+                                continue
+                            bulk.append(message)
+                        else:
+                            break
 
-                await channel.delete_messages(bulk)
+                    await channel.delete_messages(bulk)
+                except DiscordServerError as e:
+                    ## print error message and continue
+                    print("Discord 5xx error")
+                    print(e)
+                    continue
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(description="Command to purge the current channel", guild_only=True)
